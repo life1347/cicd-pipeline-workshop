@@ -20,7 +20,7 @@ spec:
         livenessProbe:
           exec:
             command:
-            - redis-cli set "KEY" "VALUE"
+            - /usr/local/bin/redis-cli set "KEY" "VALUE"
 ---
 apiVersion: v1
 kind: Service
