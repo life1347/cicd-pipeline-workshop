@@ -1,2 +1,11 @@
 nginx:
   image: nginx:latest
+
+python:
+  replicas: 1
+  image: registry.srcmesh.dev/workshop/user0:0.0.1
+  redis:
+    host: redis-svc
+    port: 6379
+
+pullSecret: your-pull-secret-in-base64
