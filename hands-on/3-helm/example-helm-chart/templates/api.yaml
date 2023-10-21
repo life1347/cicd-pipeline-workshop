@@ -21,7 +21,7 @@ spec:
           value: {{ .Values.python.redis.host }}
         - name: REDIS_PORT
           value: "{{ .Values.python.redis.port }}"
-       resources:
+        resources:
           requests:
             cpu: 100m
         ports:
