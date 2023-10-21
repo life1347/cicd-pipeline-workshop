@@ -15,11 +15,15 @@ spec:
       containers:
       - name: python
         image: {{ .Values.python.image }}
+        imagePullPolicy: Always
         env:
         - name: REDIS_HOST
           value: {{ .Values.python.redis.host }}
         - name: REDIS_PORT
           value: "{{ .Values.python.redis.port }}"
+       resources:
+          requests:
+            cpu: 100m
         ports:
         - containerPort: 5000
         livenessProbe:
@@ -27,7 +31,25 @@ spec:
             port: 5000
       imagePullSecrets:
       - name: pullsecret
-
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: python
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: python
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 30
 ---
 apiVersion: v1
 data:
