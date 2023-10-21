@@ -22,6 +22,9 @@ spec:
           value: "{{ .Values.python.redis.port }}"
         ports:
         - containerPort: 5000
+        livenessProbe:
+          tcpSocket:
+            port: 5000
       imagePullSecrets:
       - name: pullsecret
 
